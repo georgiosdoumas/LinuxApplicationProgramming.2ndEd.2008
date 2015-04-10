@@ -1,0 +1,18 @@
+ERRATA page 47  Table 5.1 should be like this 
+Preprocessing     *.c     *.i         gcc -E test.c -o test.i
+Compiling         *.i     *.s         gcc -S test.i -o test.s
+Assembling        *.s     *.o         gcc -c test.s -o test.o
+Linking           *.o                 gcc    test.o -o test
+
+ERRATA page 65 Listing 6.4 should define the different filename for make
+$ cd /source/ch6
+$ make -f Makefile.simpvar
+
+ERRATA page 66  for a function call takes the general form of ${func arg1,arg2,...).
+   correct is : for a function call takes the general form of $(func arg1,arg2,...).
+
+ERRATA page 68  Lines 16 through 25 represent the header file dependencies. 
+   correct is : Lines 19 through 25 represent the header file dependencies.
+
+ERRATA page 75 listing 7.1 must have a line #include <stdio.h>
+ERRATA page 79 line 35 of listing 7.4 should better be: return 0; (not just: return; )
