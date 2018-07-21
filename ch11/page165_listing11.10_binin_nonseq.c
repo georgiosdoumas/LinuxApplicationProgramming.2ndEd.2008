@@ -10,10 +10,10 @@ int main()
   FILE *fin;
   fin = fopen( FILENAME, "r" );   /* Open the input file */
   if (fin == (FILE *)0) exit(-1);
-  for(int i=2; i>=0; --i)
+  for(int i = MAX_OBJECTS; i > 0; --i)
   {
-     if(i != 0) /* this test can be ommited and do the fseek even for i==0 */
-       fseek( fin, (i * sizeof(MY_TYPE_T)), SEEK_SET );
+     if(i != 1) /* this test can be ommited and do the fseek even for i==1 */
+       fseek( fin, ( (i-1) * sizeof(MY_TYPE_T)), SEEK_SET );
      fread( &object, sizeof(MY_TYPE_T), 1, fin );
      printf("%d %.2f %.2f %s\n", object.id, object.x_coord, object.y_coord, object.name );
      rewind( fin );
