@@ -26,8 +26,11 @@ int main()
       ret = wait( NULL );
     }
   }
-  printf("Finish!\n");
+  printf("Finish! But it is good practice to explicitly close the 2 pipes before we go.\n");
+  close( thePipe[0] );
+  close( thePipe[1] );
   return 0;
 }
 
 /* gcc -Wall page178_listing12.2_fpipe.c -o page178_listing12.2_fpipe */
+
