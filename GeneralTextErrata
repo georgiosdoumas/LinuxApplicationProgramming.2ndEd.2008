@@ -16,3 +16,8 @@ ERRATA page 68  Lines 16 through 25 represent the header file dependencies.
 
 ERRATA page 75 listing 7.1 must have a line #include <stdio.h>
 ERRATA page 79 line 35 of listing 7.4 should better be: return 0; (not just: return; )
+
+ERRATA page 179 near the end :
+In this example, you open a new file called app_log and receive a file descriptor called fd1 .
+Correct is :
+In this example, you open a new file called app_log and receive a file descriptor called oldfd .
