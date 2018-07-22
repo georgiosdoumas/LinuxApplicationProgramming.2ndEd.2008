@@ -1,3 +1,4 @@
+/* As usual, many expansions and corrections on the books code */
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <stdio.h>
@@ -12,7 +13,7 @@
 int main (int argc, char* argv[])
 {
   const char* target_ipaddr = "192.168.122.89" ; /* IP of my VirtualMachine on which the server executable runs */
-  if(argc == 2) target_ipaddr = argv[1]; /* if user passes an IP as cmd-line argument, use that instead */
+  if(argc == 2) target_ipaddr = argv[1]; /* if user passes an IP as cmd-line argument, use it instead */
   int connectionFd, inpresult, index = 0, limit = MAX_BUFFER;
   struct sockaddr_in servaddr;
   char timebuffer[MAX_BUFFER+1];
@@ -32,8 +33,11 @@ int main (int argc, char* argv[])
     limit -= inpresult;
   }
   timebuffer[index] = '\0';
-  printf("\n%s\n", timebuffer);
-  printf(" Closing socket connection.\n");
+  printf("\n Server says the time is: %s", timebuffer);
+  struct sockaddr_in localaddr;   /* Implementing what is mentioned on page 206 at the end, and correcting the errors */
+  unsigned int laddrlen;
+  getsockname( connectionFd, (struct sockaddr *)&localaddr, &laddrlen );
+  printf(" Closing socket connection that uses local tcp-port:%d\n", ntohs(localaddr.sin_port));
   close(connectionFd);
   return(0);
 }
