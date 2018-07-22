@@ -17,7 +17,7 @@ int main ( void )
   serverFd = socket( AF_INET, SOCK_STREAM, 0 );
   memset( &servaddr, 0, sizeof(servaddr) );
   servaddr.sin_family = AF_INET;
-  servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+  servaddr.sin_addr.s_addr = htonl(INADDR_ANY); /* listen to all incoming addresses */ 
   servaddr.sin_port = htons(DAYTIME_SERVER_PORT);
   bind( serverFd,(struct sockaddr *)&servaddr, sizeof(servaddr) );
   listen( serverFd, 5 );
