@@ -8,6 +8,7 @@
 #include <unistd.h>
 #define MAX_BUFFER 128
 #define DAYTIME_SERVER_PORT 13
+#define MAX_PEND_CONN 3
 int main ( void )
 {
   int serverFd, connectionFd;
@@ -20,7 +21,7 @@ int main ( void )
   servaddr.sin_addr.s_addr = htonl(INADDR_ANY); /* listen to all incoming addresses */ 
   servaddr.sin_port = htons(DAYTIME_SERVER_PORT);
   bind( serverFd,(struct sockaddr *)&servaddr, sizeof(servaddr) );
-  listen( serverFd, 5 );
+  listen( serverFd, MAX_PEND_CONN );
   while ( 1 ) 
   {
     connectionFd = accept( serverFd,(struct sockaddr *)NULL, NULL );
