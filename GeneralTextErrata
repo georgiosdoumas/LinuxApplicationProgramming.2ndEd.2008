@@ -25,3 +25,9 @@ In this example, you open a new file called app_log and receive a file descripto
 ERRATA page 196 listing 13.2 code line 12
 int connectionFd, in, index = 0.limit = MAX_BUFFER;  -->change it to :
 int connectionFd, in, index = 0, limit = MAX_BUFFER;
+
+ERRATA page 206 last code snippet has 2 lines wrong (after --> I give the correct ) : 
+struct sockaddr localaddr;    --> struct sockaddr_in localaddr;
+....
+getsockname(sock, (struct sockaddr_in *)&localaddr, &laddrlen);  --> getsockname(sock, (struct sockaddr *)&localaddr, &laddrlen);
+
