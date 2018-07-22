@@ -21,3 +21,7 @@ ERRATA page 179 near the end :
 In this example, you open a new file called app_log and receive a file descriptor called fd1 .
 Correct is :
 In this example, you open a new file called app_log and receive a file descriptor called oldfd .
+
+ERRATA page 196 listing 13.2 code line 12
+int connectionFd, in, index = 0.limit = MAX_BUFFER;  -->change it to :
+int connectionFd, in, index = 0, limit = MAX_BUFFER;
