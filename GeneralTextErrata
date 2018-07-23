@@ -31,3 +31,6 @@ struct sockaddr localaddr;    --> struct sockaddr_in localaddr;
 ....
 getsockname(sock, (struct sockaddr_in *)&localaddr, &laddrlen);  --> getsockname(sock, (struct sockaddr *)&localaddr, &laddrlen);
 
+ERRATA page 236 TABLE 14.9 1st line 
+0 Signal sent to the process defined by pid  --correct is --> 
+>0 Signal sent to the process defined by pid
