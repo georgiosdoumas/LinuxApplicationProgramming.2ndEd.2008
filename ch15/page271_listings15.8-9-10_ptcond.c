@@ -66,7 +66,7 @@ int main()
   pthread_t consumers[MAX_CONSUMERS];
   pthread_t producer;
   for ( i = 0 ; i < MAX_CONSUMERS ; i++ )
-  {    /* Spawn the consumer thread */
+  {    /* Spawn the consumer threads */
     pthread_create( &consumers[i], NULL, consumerThread, NULL );
   }
   pthread_create( &producer, NULL, producerThread, NULL ); /* Spawn the single producer thread */
