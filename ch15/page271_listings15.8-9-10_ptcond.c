@@ -1,8 +1,9 @@
+
 #include <pthread.h>
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h> /* for random() */
-#include <unistd.h> /* for sleep() , in case we use it for a more slow output */
+#include <unistd.h> /* for sleep() */
 #define MAX_CONSUMERS 5
 #define MAX_WORKSTEPS 20
 pthread_mutex_t cond_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -20,7 +21,7 @@ void *producerThread( void *arg )
     if (ret == 0)
     {
       /* ++workCount; */
-      workCount += 3 ;
+      workCount += 3 ; /* I prefer this to create a little higher workload for the consumers */
       printf( "Producer: Created workload (%d)\n", workCount );
       pthread_cond_broadcast( &condition );
       pthread_mutex_unlock( &cond_mutex );
@@ -47,11 +48,11 @@ void *consumerThread( void *arg )
     if (workCount)
     {
       --workCount;
-      printf( "  Consumer %lu: Performed reduction of workcount to: %d\n", pthread_self(), workCount );
+      printf("  Consumer %lu: Performed reduction of workcount to: %d\n", pthread_self(), workCount );
     }
     else {
-      printf("  (no workload) Relaxing for some millisecs ... \n");
-      //sleep(1);   // uncomment it for a slower output 
+      printf("  Consumer %lu relaxing for some millisecs (no workload)\n", pthread_self() );
+      //sleep(1);
     }
     assert( pthread_mutex_unlock( &cond_mutex ) == 0);
   }
@@ -71,14 +72,14 @@ int main()
   pthread_create( &producer, NULL, producerThread, NULL ); /* Spawn the single producer thread */
   pthread_join( producer, NULL );   /* Wait for the producer thread */
   while ((workCount > 0))
-    ;
+    ;   /* do nothing, just let the consumer threads reduce the workload */
   for ( i = 0 ; i < MAX_CONSUMERS ; i++ )
-  {     /* Cancel and join the consumer threads */
+  {     /* Cancel the consumer threads, they have done their job now */
     pthread_cancel( consumers[i] );
   }
-  pthread_mutex_destroy( &cond_mutex );
+  pthread_mutex_destroy( &cond_mutex );  /* release mutex */
   pthread_cond_destroy( &condition );
   return 0;
 }
 
-/* gcc -Wall page271_listings15.8-9-10_ptcond.c  -o page271_listings15.8-9-10_ptcond -lpthread */
+/* gcc -Wall -pthread page271_listings15.8-9-10_ptcond.c  -o page271_listings15.8-9-10_ptcond -lpthread */
