@@ -34,3 +34,11 @@ getsockname(sock, (struct sockaddr_in *)&localaddr, &laddrlen);  --> getsockname
 ERRATA page 236 TABLE 14.9 1st line 
 0 Signal sent to the process defined by pid  --correct is --> 
 >0 Signal sent to the process defined by pid
+
+
+
+ERRATA page 588
+(gdb) break pos.c:17 thread 5
+This installs a breakpoint at line 20 in myfile.c , but only for thread number 5.
+  --Correct the first line with -->
+(gdb) break myfile.c:17 thread 5
