@@ -87,4 +87,14 @@ sudo ./page392_listing20.5_phymap 252 4096
 0x7f007198f0e0 : e8 10 00 00 06 a1 ff ff f0 10 00 00 06 a1 ff ff 
 0x7f007198f0f0 : f8 10 00 00 06 a1 ff ff 00 11 00 00    
 Now we must not forget to unmap() ! 
+
+
+sudo ./page392_listing20.5_phymap 30 0x3000
+ Finished with cmd-line arguments, offset is 12288 and length is 30 
+   Lets check what mmap() function achieved : 
+  mmap() call seems to succeeded and returned an address : 0x7f583416c000 
+
+0x7f583416c000 : 47 00 c0 e5 b3 c7 00 00 00 00 ff 0f 10 88 b4 c7 
+0x7f583416c010 : 00 00 00 00 30 00 00 00 00 00 00 00 86 b8    
+Now we must not forget to unmap() !
 */ 
