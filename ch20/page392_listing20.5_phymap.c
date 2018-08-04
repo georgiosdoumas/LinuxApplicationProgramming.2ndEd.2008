@@ -12,7 +12,8 @@ int main( int argc, char *argv[] )
   off_t offset;
   if (argc < 3) {
     printf( "Usage is: \n %s <length> <offset-address> \n",argv[0]);
-    printf(" where <offset-addr> must be in multiples of %d [0x%x in hex] bytes (can be 0)\n", localsystempagesize, localsystempagesize);
+    printf(" where <length> is a positive integer < 256 (for bigger values we get segmentation fault! Why?)\n");
+    printf(" and <offset-addr> must be in multiples of %d [0x%x in hex] bytes (can be 0)\n", localsystempagesize, localsystempagesize);
     exit(-1);
   }
   if (argv[2][1] == 'x')  {  /* the user gave as address an hex number like : 0xhexdigits */
@@ -63,3 +64,27 @@ int main( int argc, char *argv[] )
 }
 
 /* gcc -Wall -g page392_listing20.5_phymap.c -o page392_listing20.5_phymap */
+/* 
+sudo ./page392_listing20.5_phymap 252 4096
+ Finished with cmd-line arguments, offset is 4096 and length is 252 
+   Lets check what mmap() function achieved : 
+  mmap() call seems to succeeded and returned an address : 0x7f007198f000 
+
+0x7f007198f000 : 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0x7f007198f010 : 18 10 00 00 06 a1 ff ff 20 10 00 00 06 a1 ff ff 
+0x7f007198f020 : 28 10 00 00 06 a1 ff ff 30 10 00 00 06 a1 ff ff 
+0x7f007198f030 : 38 10 00 00 06 a1 ff ff 40 10 00 00 06 a1 ff ff 
+0x7f007198f040 : 48 10 00 00 06 a1 ff ff 50 10 00 00 06 a1 ff ff 
+0x7f007198f050 : 58 10 00 00 06 a1 ff ff 60 10 00 00 06 a1 ff ff 
+0x7f007198f060 : 68 10 00 00 06 a1 ff ff 70 10 00 00 06 a1 ff ff 
+0x7f007198f070 : 78 10 00 00 06 a1 ff ff 80 10 00 00 06 a1 ff ff 
+0x7f007198f080 : 88 10 00 00 06 a1 ff ff 90 10 00 00 06 a1 ff ff 
+0x7f007198f090 : 98 10 00 00 06 a1 ff ff a0 10 00 00 06 a1 ff ff 
+0x7f007198f0a0 : a8 10 00 00 06 a1 ff ff b0 10 00 00 06 a1 ff ff 
+0x7f007198f0b0 : b8 10 00 00 06 a1 ff ff c0 10 00 00 06 a1 ff ff 
+0x7f007198f0c0 : c8 10 00 00 06 a1 ff ff d0 10 00 00 06 a1 ff ff 
+0x7f007198f0d0 : d8 10 00 00 06 a1 ff ff e0 10 00 00 06 a1 ff ff 
+0x7f007198f0e0 : e8 10 00 00 06 a1 ff ff f0 10 00 00 06 a1 ff ff 
+0x7f007198f0f0 : f8 10 00 00 06 a1 ff ff 00 11 00 00    
+Now we must not forget to unmap() ! 
+*/ 
