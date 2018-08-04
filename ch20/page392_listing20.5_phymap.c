@@ -38,7 +38,6 @@ int main( int argc, char *argv[] )
   if (fd != -1)
   {
     addr = (unsigned char *)mmap( NULL, length, PROT_READ, MAP_SHARED, fd, offset );
-    printf("   Lets check what mmap() function achieved : \n");
     if (addr != NULL)
     {
       printf( "  mmap() call seems to succeeded and returned an address : %p \n", addr);
